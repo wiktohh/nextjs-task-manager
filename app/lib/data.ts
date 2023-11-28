@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosInstance } from "axios";
 
 export const _loginUser = async (data: { email: string; password: string }) => {
   const response = await axios.post("/api/auth/login", {
@@ -24,6 +24,13 @@ export const _registerUser = async (data: {
     password: data.password,
     secondPassword: data.secondPassword,
   });
+  if (response.status === 200) {
+    return response.data;
+  }
+};
+
+export const _getUser = async (axios: AxiosInstance) => {
+  const response = await axios.get("/api/auth/getUser");
   if (response.status === 200) {
     return response.data;
   }
