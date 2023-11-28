@@ -1,9 +1,8 @@
-import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 import * as jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
-const prisma = new PrismaClient();
+import prisma from "@/script";
 
 interface JwtPayload {
   userId: number;

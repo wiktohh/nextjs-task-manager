@@ -1,11 +1,9 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/script";
 import { NextResponse } from "next/server";
 import * as jwt from "jsonwebtoken";
 import * as bcrypt from "bcrypt";
 import dotenv from "dotenv";
 dotenv.config();
-
-const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
   const { email, password } = await req.json();
@@ -27,7 +25,7 @@ export async function POST(req: Request) {
     return NextResponse.json("Internal Server Error", { status: 500 });
   }
 
-  const token = await jwt.sign({ userId: user.id }, jwtSecret);
+  const token = jwt.sign({ userId: user.id }, jwtSecret);
   console.log(token);
   return NextResponse.json({ token, user });
 }

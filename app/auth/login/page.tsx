@@ -19,7 +19,7 @@ const LoginPage = () => {
   const router = useRouter();
 
   const { mutate, isLoading } = useMutation(_loginUser, {
-    onSuccess: async ({ token }: any) => {
+    onSuccess: ({ token }: any) => {
       localStorage.setItem("token", token);
       router.push("/home");
     },

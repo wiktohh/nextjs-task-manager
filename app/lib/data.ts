@@ -31,7 +31,5 @@ export const _registerUser = async (data: {
 
 export const _getUser = async (axios: AxiosInstance) => {
   const response = await axios.get("/api/auth/getUser");
-  if (response.status === 200) {
-    return response.data;
-  }
+  return response.data;
 };
