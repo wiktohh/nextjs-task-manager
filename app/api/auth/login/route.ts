@@ -27,8 +27,7 @@ export async function POST(req: Request) {
     return NextResponse.json("Internal Server Error", { status: 500 });
   }
 
-  const token = jwt.sign({ userId: user.id }, jwtSecret);
-  return NextResponse.json({
-    body: { token, user },
-  });
+  const token = await jwt.sign({ userId: user.id }, jwtSecret);
+  console.log(token);
+  return NextResponse.json({ token, user });
 }
