@@ -12,11 +12,11 @@ export async function POST(req: Request) {
     where: { email },
   });
   if (!user) {
-    return NextResponse.json({ message: "User not found" });
+    return NextResponse.json({ message: "User not found" }, { status: 404 });
   }
   const passwordValid = await bcrypt.compare(password, user.password);
   if (!passwordValid) {
-    return NextResponse.json({ message: "Invalid password" });
+    return NextResponse.json({ message: "Invalid password" }, { status: 401 });
   }
 
   const jwtSecret = process.env.JWT_SECRET;

@@ -6,7 +6,10 @@ export async function POST(req: Request) {
   const { firstName, lastName, email, password, secondPassword } =
     await req.json();
   if (password !== secondPassword) {
-    return NextResponse.json({ message: "Passwords do not match" });
+    return NextResponse.json(
+      { message: "Passwords do not match" },
+      { status: 400 }
+    );
   }
   const user = await prisma.user.create({
     data: {
