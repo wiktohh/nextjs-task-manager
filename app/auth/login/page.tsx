@@ -1,6 +1,9 @@
 "use client";
+import { _loginUser } from "@/app/lib/data";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useMutation } from "react-query";
 import * as Yup from "yup";
 
 const LoginPage = () => {
@@ -13,6 +16,18 @@ const LoginPage = () => {
       .required("Wymagane"),
   });
 
+  const router = useRouter();
+
+  const { mutate, isLoading } = useMutation(_loginUser, {
+    onSuccess: async ({ token }: any) => {
+      localStorage.setItem("token", token);
+      router.push("/home");
+    },
+    onError: (error: any) => {
+      console.log(error);
+    },
+  });
+
   return (
     <div className="w-full h-full flex justify-center items-center">
       <div className="mt-4 p-8 rounded shadow">
@@ -22,11 +37,7 @@ const LoginPage = () => {
         <Formik
           initialValues={{ email: "", password: "" }}
           validationSchema={validationSchema}
-          onSubmit={(values, actions) => {
-            console.log({ values, actions });
-            console.log(JSON.stringify(values, null, 2));
-            actions.setSubmitting(false);
-          }}
+          onSubmit={mutate}
         >
           <Form className="space-y-4">
             <div className="flex flex-col">

@@ -2,7 +2,8 @@ import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 import * as jwt from "jsonwebtoken";
 import * as bcrypt from "bcrypt";
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
 
 const prisma = new PrismaClient();
 

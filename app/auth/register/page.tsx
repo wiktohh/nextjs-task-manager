@@ -1,12 +1,15 @@
 "use client";
+import { _registerUser } from "@/app/lib/data";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useMutation } from "react-query";
 import * as Yup from "yup";
 
 const RegisterPage = () => {
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().required("Wymagane"),
-    surname: Yup.string().required("Wymagane"),
+    lastName: Yup.string().required("Wymagane"),
     email: Yup.string()
       .email("Nieprawidłowy adres e-mail")
       .required("Wymagane"),
@@ -18,6 +21,14 @@ const RegisterPage = () => {
       .required("Wymagane"),
   });
 
+  const router = useRouter();
+
+  const { mutate, isLoading } = useMutation(_registerUser, {
+    onSuccess: () => {
+      router.push("/auth/login");
+    },
+  });
+
   return (
     <div className="w-full h-full flex justify-center items-center">
       <div className="mt-4 p-8 rounded shadow">
@@ -25,13 +36,15 @@ const RegisterPage = () => {
           Zarejestruj się!
         </h1>
         <Formik
-          initialValues={{ email: "", password: "" }}
-          validationSchema={validationSchema}
-          onSubmit={(values, actions) => {
-            console.log({ values, actions });
-            console.log(JSON.stringify(values, null, 2));
-            actions.setSubmitting(false);
+          initialValues={{
+            firstName: "",
+            lastName: "",
+            email: "",
+            password: "",
+            secondPassword: "",
           }}
+          validationSchema={validationSchema}
+          onSubmit={mutate}
         >
           <Form className="space-y-4">
             <div className="flex flex-col">
@@ -55,8 +68,8 @@ const RegisterPage = () => {
               </label>
               <Field
                 type="text"
-                id="surname"
-                name="surname"
+                id="lastName"
+                name="lastName"
                 placeholder="Nazwisko"
                 className="px-4 py-2 border rounded mt-1 text-black"
               />
