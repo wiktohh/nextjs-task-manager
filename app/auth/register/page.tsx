@@ -113,9 +113,9 @@ const RegisterPage = () => {
 
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800 w-full"
             >
-              Submit
+              Zarejestruj się
             </button>
             <p>
               Masz juz konto? <Link href="login">Zaloguj się</Link>

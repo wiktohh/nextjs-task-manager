@@ -63,9 +63,9 @@ const LoginPage = () => {
 
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800  w-full"
             >
-              Submit
+              Zaloguj się
             </button>
             <p>
               Nie masz konta? <Link href="register">Zarejestruj się</Link>
