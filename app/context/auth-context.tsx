@@ -25,8 +25,6 @@ export const AuthContext = createContext<AuthContextProps>({
   logout: () => {},
 });
 
-export const useAuth = () => useContext(AuthContext);
-
 type AuthContextProviderProps = {
   children: React.ReactNode;
 };
