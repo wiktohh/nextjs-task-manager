@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMutation } from "react-query";
 import * as Yup from "yup";
+import Cookies from "js-cookie";
 
 const LoginPage = () => {
   const validationSchema = Yup.object().shape({
@@ -20,7 +21,7 @@ const LoginPage = () => {
 
   const { mutate, isLoading } = useMutation(_loginUser, {
     onSuccess: ({ token }: any) => {
-      localStorage.setItem("token", token);
+      Cookies.set("token", token);
       router.push("/home");
     },
     onError: (error: any) => {

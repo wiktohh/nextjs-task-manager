@@ -1,8 +1,8 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
-import { useQuery } from "react-query";
 import { _getUser } from "../lib/data";
 import { useAxios } from "../hooks/use-axios";
+import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
 interface UserData {
@@ -39,7 +39,7 @@ const AuthProvider = ({ children }: AuthContextProviderProps) => {
   const logout = () => {
     setToken("");
     setUser({} as UserData);
-    localStorage.removeItem("token");
+    Cookies.remove("token");
     router.replace("/auth/login");
   };
 
@@ -49,10 +49,10 @@ const AuthProvider = ({ children }: AuthContextProviderProps) => {
     const fetchData = async () => {
       try {
         const userData = await _getUser(axios);
-        setToken(localStorage.getItem("token") || "");
+        setToken(() => Cookies.get("token") || "");
         setUser(userData);
+        console.log(token);
         setLoaded(true);
-        console.log(user);
       } catch (error) {
         logout();
         setLoaded(true);
