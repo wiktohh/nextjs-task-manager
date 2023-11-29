@@ -1,44 +1,16 @@
 "use client";
 import useAuth from "@/app/hooks/use-auth";
 import Link from "next/link";
-
+import { pages } from "@/app/lib/pages";
 const NavLinks = () => {
-  const authLinks = [
-    {
-      name: "Home",
-      href: "/home",
-    },
-    {
-      name: "My Tasks",
-      href: "/my-tasks",
-    },
-    {
-      name: "Add Task",
-      href: "/add-task",
-    },
-  ];
-
-  const notAuthLinks = [
-    {
-      name: "Home",
-      href: "/home",
-    },
-    {
-      name: "Login",
-      href: "/auth/login",
-    },
-    {
-      name: "Register",
-      href: "/auth/register",
-    },
-  ];
-
   const { token } = useAuth();
 
+  console.log(token);
+
   return (
-    <>
+    <nav>
       {token &&
-        authLinks.map((link) => (
+        Object.values(pages.auth).map((link) => (
           <Link
             key={link.name}
             href={link.href}
@@ -48,7 +20,7 @@ const NavLinks = () => {
           </Link>
         ))}
       {!token &&
-        notAuthLinks.map((link) => (
+        Object.values(pages.public).map((link) => (
           <Link
             key={link.name}
             href={link.href}
@@ -57,7 +29,7 @@ const NavLinks = () => {
             {link.name}
           </Link>
         ))}
-    </>
+    </nav>
   );
 };
 
