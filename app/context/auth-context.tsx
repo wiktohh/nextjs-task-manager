@@ -4,6 +4,7 @@ import { _getUser } from "../lib/data";
 import { useAxios } from "../hooks/use-axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { useQuery } from "react-query";
 
 interface UserData {
   firstName: string;
@@ -45,21 +46,20 @@ const AuthProvider = ({ children }: AuthContextProviderProps) => {
 
   const axios = useAxios();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const userData = await _getUser(axios);
-        setToken(() => Cookies.get("token") || "");
-        setUser(userData);
-        console.log(token);
-        setLoaded(true);
-      } catch (error) {
-        logout();
-        setLoaded(true);
-      }
-    };
-    fetchData();
-  }, [token]);
+  useQuery({
+    queryKey: ["userData"],
+    queryFn: () => _getUser(axios),
+    onSuccess: (data) => {
+      console.log(data);
+      setUser(data);
+      setToken(Cookies.get("token") || "");
+      setLoaded(true);
+    },
+    onError: () => {
+      Cookies.remove("token");
+      router.replace("/auth/login");
+    },
+  });
 
   const contextValue: AuthContextProps = {
     token,
@@ -68,9 +68,11 @@ const AuthProvider = ({ children }: AuthContextProviderProps) => {
   };
 
   return (
-    <AuthContext.Provider value={contextValue}>
-      {loaded ? children : <p>Loading...</p>}
-    </AuthContext.Provider>
+    loaded && (
+      <AuthContext.Provider value={contextValue}>
+        {children}
+      </AuthContext.Provider>
+    )
   );
 };
 

@@ -5,9 +5,8 @@ export const _loginUser = async (data: { email: string; password: string }) => {
     email: data.email,
     password: data.password,
   });
-  if (response.status === 200) {
-    return response.data;
-  }
+
+  return response.data;
 };
 
 export const _registerUser = async (data: {
@@ -24,9 +23,7 @@ export const _registerUser = async (data: {
     password: data.password,
     secondPassword: data.secondPassword,
   });
-  if (response.status === 200) {
-    return response.data;
-  }
+  return response.data;
 };
 
 export const _getUser = async (axios: AxiosInstance) => {
