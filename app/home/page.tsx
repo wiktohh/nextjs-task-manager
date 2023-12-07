@@ -1,10 +1,13 @@
 import React from "react";
+import Wrapper from "../components/Wrapper";
+import FilterPanel from "../components/FilterPanel/FilterPanel";
 
 const Home12 = () => {
   return (
-    <div>
+    <Wrapper>
+      <FilterPanel />
       <h2>Home</h2>
-    </div>
+    </Wrapper>
   );
 };
 

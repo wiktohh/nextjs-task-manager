@@ -8,7 +8,7 @@ const Header = () => {
 
   return (
     <Wrapper>
-      <div className="w-full bg-white p-4 flex items-center justify-between">
+      <div className="w-full bg-white py-4 flex items-center justify-between">
         <div className="flex items-center justify-between space-x-8">
           <h1 className="text-black font-bold text-2xl">
             Task <span className="text-red-500">Manager</span>
