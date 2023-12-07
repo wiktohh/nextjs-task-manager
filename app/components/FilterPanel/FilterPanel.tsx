@@ -4,12 +4,22 @@ import { options } from "./constants";
 import Select from "./Select";
 import Input from "./Input";
 
-const FilterPanel = () => {
+const FilterPanel = ({
+  changeFiltrs,
+}: {
+  changeFiltrs: (key: string, value: string) => void;
+}) => {
   const [formData, setFormData] = useState({
     status: "",
     priority: "",
     search: "",
   });
+
+  const handleClickSearchButton = () => {
+    changeFiltrs("status", formData.status);
+    changeFiltrs("priority", formData.priority);
+    changeFiltrs("search", formData.search);
+  };
 
   return (
     <div className="w-100 bg-gray-300 rounded-md p-8 flex flex-col space-y-4 items-center">
@@ -42,7 +52,10 @@ const FilterPanel = () => {
             setFormData((prev) => ({ ...prev, search: val }));
           }}
         />
-        <button className="w-1/4 px-4 py-2 bg-red-500 hover:bg-red-600 rounded-md">
+        <button
+          onClick={handleClickSearchButton}
+          className="w-1/4 px-4 py-2 bg-red-500 hover:bg-red-600 rounded-md"
+        >
           Szukaj
         </button>
       </div>

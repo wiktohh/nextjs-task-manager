@@ -26,6 +26,8 @@ model Task {
   title        String
   description  String
   status       TaskStatus
+  priority    TaskPriority
+  deadline     DateTime
   createdAt    DateTime @default(now())
   createdBy    User     @relation("createdBy", fields: [createdById], references: [id])
   createdById  Int
@@ -35,5 +37,12 @@ model Task {
 
 enum TaskStatus {
   IN_PROGRESS
-  COMPLETED
+  TO_DO
+  DONE
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
 }

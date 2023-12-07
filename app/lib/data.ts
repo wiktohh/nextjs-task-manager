@@ -30,3 +30,8 @@ export const _getUser = async (axios: AxiosInstance) => {
   const response = await axios.get("/api/auth/getUser");
   return response.data;
 };
+
+export const _getTasks = async () => {
+  const response = await axios.get("/api/tasks/getTasks");
+  return response.data;
+};
