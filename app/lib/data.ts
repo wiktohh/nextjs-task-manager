@@ -32,6 +32,6 @@ export const _getUser = async (axios: AxiosInstance) => {
 };
 
 export const _getTasks = async () => {
-  const response = await axios.get("/api/tasks/getTasks");
+  const response = await axios.get("/api/tasks");
   return response.data;
 };
