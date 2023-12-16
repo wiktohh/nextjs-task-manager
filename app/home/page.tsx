@@ -5,7 +5,7 @@ import FilterPanel from "../components/FilterPanel/FilterPanel";
 import { useQuery } from "react-query";
 import { _getTasks } from "../lib/data";
 import LoadingSpinner from "../components/LoadingSpinner";
-import Task from "../components/Task";
+import Task, { TaskProps } from "../components/Task";
 
 const Home = () => {
   const [tasks, setTasks] = React.useState<any>([]);
@@ -14,6 +14,16 @@ const Home = () => {
     priority: "",
     search: "",
   });
+
+  const filteredTasks = () => {
+    return tasks.filter(
+      (task: any) =>
+        task.status === filtrs.status ||
+        task.priority === filtrs.priority ||
+        task.title.toLowerCase().includes(filtrs.search.toLowerCase()) ||
+        task.description.toLowerCase().includes(filtrs.search.toLowerCase())
+    );
+  };
 
   const changeFiltrs = (key: string, value: string) => {
     setFiltrs((prev) => ({ ...prev, [key]: value }));
@@ -37,7 +47,7 @@ const Home = () => {
       {isLoading && <LoadingSpinner />}
       {!isLoading &&
         tasks &&
-        tasks.map((task: any) => (
+        filteredTasks().map((task: any) => (
           <Task
             key={task.id}
             title={task.title}

@@ -1,6 +1,6 @@
 import { FaArrowRightLong } from "react-icons/fa6";
 
-interface TaskProps {
+export interface TaskProps {
   title: string;
   status: string;
   priority: string;
