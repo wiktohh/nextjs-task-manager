@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
 import { options } from "./constants";
-import Select from "./Select";
-import Input from "./Input";
+import Select from "../Select";
+import Input from "../Input";
 
 const FilterPanel = ({
   changeFiltrs,
@@ -23,7 +23,7 @@ const FilterPanel = ({
 
   return (
     <div className="w-100 bg-gray-300 rounded-md p-8 flex flex-col space-y-4 items-center">
-      <div className="w-2/3 flex space-x-4 justify-center">
+      <div className="w-100 flex space-x-8">
         <Select
           label="Wybierz status"
           defaultValue="Wszystkie"
@@ -42,8 +42,6 @@ const FilterPanel = ({
             setFormData((prev) => ({ ...prev, priority: val }));
           }}
         />
-      </div>
-      <div className="w-2/3 flex space-x-4 justify-center items-end">
         <Input
           type="text"
           placeholder="Wyszukaj zadanie"
@@ -52,13 +50,13 @@ const FilterPanel = ({
             setFormData((prev) => ({ ...prev, search: val }));
           }}
         />
-        <button
-          onClick={handleClickSearchButton}
-          className="w-1/4 px-4 py-2 bg-red-500 hover:bg-red-600 rounded-md"
-        >
-          Szukaj
-        </button>
       </div>
+      <button
+        onClick={handleClickSearchButton}
+        className="w-1/4 px-4 py-2 bg-red-500 hover:bg-red-600 rounded-md"
+      >
+        Szukaj
+      </button>
     </div>
   );
 };
