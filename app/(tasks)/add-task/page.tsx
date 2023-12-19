@@ -16,12 +16,6 @@ const AddTask = () => {
   });
   const [employees, setEmployees] = useState([]);
 
-  // const employees = [
-  //   { label: "Jan Kowalski", value: "Jan Kowalski" },
-  //   { label: "Adam Nowak", value: "Adam Nowak" },
-  //   { label: "Anna Kowal", value: "Anna Kowal" },
-  // ];
-
   useEffect(() => {
     const getEmployees = async () => {
       try {
