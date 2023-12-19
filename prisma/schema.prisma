@@ -25,7 +25,7 @@ model Task {
   id           Int      @id @default(autoincrement())
   title        String
   description  String
-  status       TaskStatus
+  status       TaskStatus @default(TO_DO)
   priority    TaskPriority
   deadline     DateTime
   createdAt    DateTime @default(now())

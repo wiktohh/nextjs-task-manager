@@ -15,8 +15,8 @@ const MyTasks = () => {
   const axios = useAxios();
 
   useEffect(() => {
+    setIsLoading(true);
     const getTasks = async () => {
-      setIsLoading(true);
       try {
         let response;
         if (tab === "created") {
