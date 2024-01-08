@@ -16,6 +16,20 @@ export async function GET(req: Request) {
     const decoded = (await jwt.verify(token, jwtSecret)) as JwtPayload;
     const tasks = await prisma.task.findMany({
       where: { createdBy: { id: decoded.userId } },
+      include: {
+        createdBy: {
+          select: {
+            firstName: true,
+            lastName: true,
+          },
+        },
+        assignedTo: {
+          select: {
+            firstName: true,
+            lastName: true,
+          },
+        },
+      },
     });
     return NextResponse.json(tasks, { status: 200 });
   } catch (error) {

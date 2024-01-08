@@ -67,6 +67,8 @@ const MyTasks = () => {
             createdById={task.createdById}
             assignedToId={task.assignedToId}
             deadline={task.deadline}
+            assignedTo={task.assignedTo}
+            createdBy={task.createdBy}
           />
         ))}
     </Wrapper>
