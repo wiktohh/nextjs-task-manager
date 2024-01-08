@@ -3,18 +3,25 @@ import Input from "@/app/components/Input";
 import Select from "@/app/components/Select";
 import Wrapper from "@/app/components/Wrapper";
 import { options } from "@/app/components/FilterPanel/constants";
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { useMutation } from "react-query";
+import { _createTask } from "@/app/lib/data";
+import { useAxios } from "@/app/hooks/use-axios";
+import { useRouter } from "next/navigation";
+import { convertDate } from "@/app/helpers/helpers";
 
 const AddTask = () => {
   const [newTask, setNewTask] = useState({
-    assignedTo: "",
+    assignedTo: 0,
     title: "",
     description: "",
     priority: "",
     deadline: "",
   });
   const [employees, setEmployees] = useState([]);
+
+  const axios = useAxios();
+  const router = useRouter();
 
   useEffect(() => {
     const getEmployees = async () => {
@@ -45,6 +52,8 @@ const AddTask = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(newTask);
+    const response = await axios.post("/api/tasks", newTask);
+    router.push("/home");
   };
 
   return (
@@ -60,10 +69,10 @@ const AddTask = () => {
           <Select
             label="Przypisz do: "
             defaultValue="Wybierz pracownika"
-            selectedValue={newTask.assignedTo}
+            selectedValue={newTask.assignedTo.toString()}
             options={employees}
             onChange={(val) =>
-              setNewTask((prev) => ({ ...prev, assignedTo: val }))
+              setNewTask((prev) => ({ ...prev, assignedTo: parseInt(val) }))
             }
           />
           <label
@@ -99,9 +108,12 @@ const AddTask = () => {
             type="date"
             id="deadline"
             name="deadline"
-            value={newTask.deadline}
+            value={newTask.deadline.split("T")[0]}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setNewTask((prev) => ({ ...prev, deadline: e.target.value }))
+              setNewTask((prev) => ({
+                ...prev,
+                deadline: new Date(e.target.value).toISOString(),
+              }))
             }
           />
           <button

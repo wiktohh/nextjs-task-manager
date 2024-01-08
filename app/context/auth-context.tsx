@@ -50,7 +50,6 @@ const AuthProvider = ({ children }: AuthContextProviderProps) => {
     queryKey: ["userData"],
     queryFn: () => _getUser(axios),
     onSuccess: (data) => {
-      console.log(data);
       setUser(data);
       setToken(Cookies.get("token") || "");
       setLoaded(true);

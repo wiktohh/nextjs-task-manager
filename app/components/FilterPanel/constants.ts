@@ -16,15 +16,15 @@ export const options = {
   priority: [
     {
       label: "Niskie",
-      value: "low",
+      value: "LOW",
     },
     {
       label: "Średnie",
-      value: "medium",
+      value: "MEDIUM",
     },
     {
       label: "Wysokie",
-      value: "high",
+      value: "HIGH",
     },
   ],
 };

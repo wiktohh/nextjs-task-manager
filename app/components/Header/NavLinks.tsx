@@ -12,8 +12,6 @@ const NavLinks = () => {
   const { token } = useAuth();
   const [authLinks, setAuthLinks] = useState<HeaderLinks[]>([]);
 
-  console.log(token);
-
   useEffect(() => {
     const links = token
       ? Object.values(pages.auth)

@@ -35,3 +35,17 @@ export const _getTasks = async () => {
   const response = await axios.get("/api/tasks");
   return response.data;
 };
+
+export const _createTask = async (
+  axios: AxiosInstance,
+  data: {
+    assignedTo: string;
+    title: string;
+    description: string;
+    priority: string;
+    deadline: string;
+  }
+) => {
+  const response = await axios.post("/api/tasks", data);
+  return response.data;
+};
