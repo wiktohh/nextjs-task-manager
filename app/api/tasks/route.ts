@@ -38,6 +38,22 @@ export async function POST(req: Request) {
 }
 
 export async function GET(req: Request) {
-  const tasks = await prisma.task.findMany();
+  const tasks = await prisma.task.findMany({
+    include: {
+      createdBy: {
+        select: {
+          firstName: true,
+          lastName: true,
+        },
+      },
+      assignedTo: {
+        select: {
+          firstName: true,
+          lastName: true,
+        },
+      },
+    },
+  });
+  console.log(tasks);
   return NextResponse.json(tasks, { status: 200 });
 }

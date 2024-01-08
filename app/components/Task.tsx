@@ -8,6 +8,8 @@ export interface TaskProps {
   createdById: number;
   assignedToId: number;
   deadline: string;
+  createdBy: { firstName: string; lastName: string };
+  assignedTo: { firstName: string; lastName: string };
 }
 
 const Task = (props: TaskProps) => {
@@ -16,9 +18,13 @@ const Task = (props: TaskProps) => {
       <div className="bg-yellow-100 w-full py-2 text-center">
         <h2 className="text-2xl">{props.title}</h2>
         <div className="flex items-center justify-center text-xl py-2 space-x-2">
-          <p>{props.createdById}</p>
+          <p>
+            {props.createdBy.firstName} {props.createdBy.lastName}
+          </p>
           <FaArrowRightLong />
-          <p>{props.assignedToId}</p>
+          <p>
+            {props.assignedTo.firstName} {props.assignedTo.lastName}
+          </p>
         </div>
         <div className="flex justify-between py-2">
           <div className="w-1/3">
