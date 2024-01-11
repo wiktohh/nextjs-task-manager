@@ -1,6 +1,8 @@
 import { FaArrowRightLong } from "react-icons/fa6";
+import { useRouter } from "next/navigation";
 
 export interface TaskProps {
+  id: number;
   title: string;
   status: string;
   priority: string;
@@ -13,8 +15,17 @@ export interface TaskProps {
 }
 
 const Task = (props: TaskProps) => {
+  const router = useRouter();
+
+  const handleTaskClick = () => {
+    router.push(`/task/${props.id}`);
+  };
+
   return (
-    <div className="w-100 flex flex-col my-4 transition-all hover:scale-105">
+    <div
+      onClick={handleTaskClick}
+      className="cursor-pointer w-100 flex flex-col my-4 transition-all hover:scale-105"
+    >
       <div className="bg-yellow-100 w-full py-2 text-center">
         <h2 className="text-2xl">{props.title}</h2>
         <div className="flex items-center justify-center text-xl py-2 space-x-2">

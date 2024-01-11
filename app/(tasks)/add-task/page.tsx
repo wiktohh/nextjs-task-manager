@@ -66,15 +66,7 @@ const AddTask = () => {
             placeholder="Wpisz tytuł"
             type="text"
           />
-          <Select
-            label="Przypisz do: "
-            defaultValue="Wybierz pracownika"
-            selectedValue={newTask.assignedTo.toString()}
-            options={employees}
-            onChange={(val) =>
-              setNewTask((prev) => ({ ...prev, assignedTo: parseInt(val) }))
-            }
-          />
+           
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="description"

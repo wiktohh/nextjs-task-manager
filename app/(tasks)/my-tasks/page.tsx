@@ -59,6 +59,7 @@ const MyTasks = () => {
       {!isLoading &&
         tasks.map((task: any) => (
           <Task
+            id={task.id}
             key={task.id}
             title={task.title}
             status={task.status}
