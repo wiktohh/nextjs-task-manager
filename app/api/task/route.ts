@@ -62,3 +62,31 @@ export async function PATCH(req: Request, res: NextApiResponse) {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }
 }
+
+export async function DELETE(req: Request, res: NextApiResponse) {
+  try {
+    console.log(req.body);
+    const data = await req.json();
+
+    if (!data.id) {
+      throw new Error("Missing ID in request body");
+    }
+
+    const task = await prisma.task.findUnique({
+      where: { id: Number(data.id) },
+    });
+
+    if (!task) {
+      throw new Error("Task not found");
+    }
+
+    const deletedTask = await prisma.task.delete({
+      where: { id: Number(data.id) },
+    });
+
+    return NextResponse.json(deletedTask, { status: 200 });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error: error.message }, { status: 400 });
+  }
+}

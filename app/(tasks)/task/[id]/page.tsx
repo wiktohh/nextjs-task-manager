@@ -4,9 +4,21 @@ import { options } from "@/app/components/FilterPanel/constants";
 import Select from "@/app/components/Select";
 import Wrapper from "@/app/components/Wrapper";
 import axios from "axios";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
 import { CLIENT_RENEG_LIMIT } from "tls";
+
+type Status = "toDo" | "inProgress" | "Done";
+type Priority = "LOW" | "MEDIUM" | "HIGH";
+
+interface ITask {
+  title: string;
+  description: string;
+  status: Status;
+  priority: Priority;
+  deadline: string;
+  createdAt: string;
+}
 
 const TaskDetails = () => {
   const [task, setTask] = useState<any>({
@@ -19,6 +31,7 @@ const TaskDetails = () => {
   });
   const [isEdit, setIsEdit] = useState(false);
 
+  const router = useRouter();
   const { id } = useParams();
   console.log(id);
   useEffect(() => {
@@ -48,6 +61,19 @@ const TaskDetails = () => {
     }
   };
 
+  const removeTask = async () => {
+    try {
+      const response = await axios.delete(`/api/task`, {
+        data: {
+          id: id,
+        },
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleEditButtonClick = () => {
     if (isEdit) {
       console.log(task);
@@ -57,6 +83,11 @@ const TaskDetails = () => {
     setIsEdit((prev) => !prev);
   };
 
+  const handleDeleteButtonClick = () => {
+    removeTask();
+    router.push("/home");
+  };
+
   return (
     <Wrapper>
       <div className="w-100 mx-auto p-4 bg-white rounded shadow-md">
@@ -64,6 +95,12 @@ const TaskDetails = () => {
           <h2 className="text-2xl font-bold">Task Details</h2>
           <button
             className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none"
+            onClick={handleDeleteButtonClick}
+          >
+            Usuń
+          </button>
+          <button
+            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none"
             onClick={handleEditButtonClick}
           >
             {isEdit ? "Zapisz" : "Edytuj"}
@@ -77,7 +114,7 @@ const TaskDetails = () => {
               className="mb-2 p-2 border border-gray-300 rounded w-full"
               value={task.title}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setTask((prev) => ({ ...prev, title: e.target.value }))
+                setTask((prev: ITask) => ({ ...prev, title: e.target.value }))
               }
             />
             <textarea
@@ -86,7 +123,10 @@ const TaskDetails = () => {
               id="description"
               placeholder="Opis"
               onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                setTask((prev) => ({ ...prev, description: e.target.value }))
+                setTask((prev: ITask) => ({
+                  ...prev,
+                  description: e.target.value,
+                }))
               }
             />
             <input
@@ -94,7 +134,7 @@ const TaskDetails = () => {
               type="text"
               value={task.status}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setTask((prev) => ({ ...prev, status: e.target.value }))
+                setTask((prev: ITask) => ({ ...prev, status: e.target.value }))
               }
             />
             <Select
@@ -103,7 +143,7 @@ const TaskDetails = () => {
               selectedValue={task.priority}
               options={options.priority}
               onChange={(val) =>
-                setTask((prev) => ({ ...prev, priority: val }))
+                setTask((prev: ITask) => ({ ...prev, priority: val }))
               }
             />
             <input
@@ -111,7 +151,10 @@ const TaskDetails = () => {
               type="text"
               value={task.deadline}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setTask((prev) => ({ ...prev, deadline: e.target.value }))
+                setTask((prev: ITask) => ({
+                  ...prev,
+                  deadline: e.target.value,
+                }))
               }
             />
             <input
@@ -119,7 +162,10 @@ const TaskDetails = () => {
               type="text"
               value={task.createdAt}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setTask((prev) => ({ ...prev, createdAt: e.target.value }))
+                setTask((prev: ITask) => ({
+                  ...prev,
+                  createdAt: e.target.value,
+                }))
               }
             />
           </form>
