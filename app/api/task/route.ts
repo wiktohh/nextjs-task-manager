@@ -13,6 +13,20 @@ export async function POST(req: Request, res: NextApiResponse) {
 
     const task = await prisma.task.findUnique({
       where: { id: Number(id) },
+      include: {
+        createdBy: {
+          select: {
+            firstName: true,
+            lastName: true,
+          },
+        },
+        assignedTo: {
+          select: {
+            firstName: true,
+            lastName: true,
+          },
+        },
+      },
     });
 
     if (!task) {

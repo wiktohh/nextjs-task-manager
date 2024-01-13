@@ -1,13 +1,14 @@
-type Type = "text" | "number" | "email" | "password";
+type Type = "text" | "number" | "email" | "password" | "date";
 
 interface InputProps {
   label: string;
   onChange: (value: string) => void;
   placeholder: string;
   type: Type;
+  defaultValue?: string;
 }
 
-const Input = ({ label, onChange, placeholder, type }: InputProps) => {
+const Input = ({ label, onChange, placeholder, type, defaultValue }: InputProps) => {
   return (
     <div className="flex flex-col w-full">
       <label
@@ -21,6 +22,7 @@ const Input = ({ label, onChange, placeholder, type }: InputProps) => {
           onChange(e.target.value);
         }}
         id="input"
+        value={defaultValue}
         className="w-full rounded-lg  bg-gray-100 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 "
         placeholder={placeholder}
         type={type}

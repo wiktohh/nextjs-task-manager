@@ -66,7 +66,7 @@ const AddTask = () => {
             placeholder="Wpisz tytuł"
             type="text"
           />
-           
+
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="description"
@@ -88,6 +88,15 @@ const AddTask = () => {
             options={options.priority}
             onChange={(val) =>
               setNewTask((prev) => ({ ...prev, priority: val }))
+            }
+          />
+          <Select
+            label="Przypisz pracowanika:"
+            defaultValue="Przypisz pracowanika"
+            selectedValue={newTask.assignedTo.toString()}
+            options={employees}
+            onChange={(val) =>
+              setNewTask((prev) => ({ ...prev, assignedTo: parseInt(val) }))
             }
           />
           <label

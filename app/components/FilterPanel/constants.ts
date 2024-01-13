@@ -10,7 +10,7 @@ export const options = {
     },
     {
       label: "Do zrobienia",
-      value: "toDo",
+      value: "TO_DO",
     },
   ],
   priority: [
