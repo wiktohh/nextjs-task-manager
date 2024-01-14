@@ -12,13 +12,14 @@ import { convertDate } from "@/app/helpers/helpers";
 
 const AddTask = () => {
   const [newTask, setNewTask] = useState({
-    assignedTo: 0,
+    assignedTo: -1,
     title: "",
     description: "",
     priority: "",
     deadline: "",
   });
   const [employees, setEmployees] = useState([]);
+  const [error, setError] = useState("");
 
   const axios = useAxios();
   const router = useRouter();
@@ -52,6 +53,17 @@ const AddTask = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(newTask);
+    if (
+      !newTask.assignedTo ||
+      !newTask.title ||
+      !newTask.description ||
+      !newTask.priority ||
+      !newTask.deadline ||
+      newTask.assignedTo === -1
+    ) {
+      setError("Wypełnij wszystkie pola!");
+      return;
+    }
     const response = await axios.post("/api/tasks", newTask);
     router.push("/home");
   };
@@ -68,13 +80,13 @@ const AddTask = () => {
           />
 
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="text-black mb-2 block text-sm font-medium"
             htmlFor="description"
           >
             Opis
           </label>
           <textarea
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-32"
+            className="w-full rounded-lg  bg-gray-100 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 "
             id="description"
             placeholder="Opis"
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
@@ -99,24 +111,23 @@ const AddTask = () => {
               setNewTask((prev) => ({ ...prev, assignedTo: parseInt(val) }))
             }
           />
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="deadline"
-          >
-            Deadline
-          </label>
-          <input
-            type="date"
-            id="deadline"
-            name="deadline"
-            value={newTask.deadline.split("T")[0]}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          <Input
+            label="Deadline"
+            onChange={(val) =>
               setNewTask((prev) => ({
                 ...prev,
-                deadline: new Date(e.target.value).toISOString(),
+                deadline: new Date(val).toISOString(),
               }))
             }
+            placeholder="Wybierz deadline"
+            type="date"
           />
+
+          {error && (
+            <div className="w-1/2 mx-auto text-red-500 bg-red-100 border-2 border-red-500 p-2 text-center rounded-md">
+              <p>{error}</p>
+            </div>
+          )}
           <button
             className="bg-green-500 hover:bg-green-700 text-white mr-auto font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
