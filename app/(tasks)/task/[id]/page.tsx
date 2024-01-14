@@ -178,7 +178,7 @@ const TaskDetails = () => {
           </div>
         </div>
         {isLoading && <LoadingSpinner />}
-        {isEdit && !isLoading ? (
+        {!isLoading && isEdit && (
           <form className="flex flex-col">
             <Input
               label="Ustaw tytuł:"
@@ -247,7 +247,8 @@ const TaskDetails = () => {
               defaultValue={new Date(task.deadline).toISOString().split("T")[0]}
             />
           </form>
-        ) : (
+        )}
+        {!isLoading && !isEdit && (
           <div>
             <h2 className="text-xl font-bold mb-2">{task.title}</h2>
             <p className="mb-1">Description: {task.description}</p>
