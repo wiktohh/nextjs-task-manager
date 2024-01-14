@@ -6,15 +6,15 @@ import { useRouter } from "next/navigation";
 import { useMutation } from "react-query";
 import * as Yup from "yup";
 import Cookies from "js-cookie";
+import { useState } from "react";
 
 const LoginPage = () => {
+  const [error, setError] = useState("");
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .email("Nieprawidłowy adres e-mail")
       .required("Wymagane"),
-    password: Yup.string()
-      .min(6, "Hasło musi mieć minimum 6 znaków")
-      .required("Wymagane"),
+    password: Yup.string().required("Wymagane"),
   });
 
   const router = useRouter();
@@ -26,6 +26,7 @@ const LoginPage = () => {
     },
     onError: (error: any) => {
       console.log(error);
+      setError(error.response.data.message);
     },
   });
 
@@ -72,7 +73,11 @@ const LoginPage = () => {
                 <ErrorMessage name="password" component="div" />
               </div>
             </div>
-
+            {error && (
+              <div className="text-red-500 bg-red-100 border-2 border-red-500 p-2 text-center rounded-md">
+                <p>{error}</p>
+              </div>
+            )}
             <button
               type="submit"
               className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800  w-full"

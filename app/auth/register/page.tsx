@@ -3,10 +3,12 @@ import { _registerUser } from "@/app/lib/data";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useMutation } from "react-query";
 import * as Yup from "yup";
 
 const RegisterPage = () => {
+  const [error, setError] = useState("");
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().required("Wymagane"),
     lastName: Yup.string().required("Wymagane"),
@@ -26,6 +28,10 @@ const RegisterPage = () => {
   const { mutate, isLoading } = useMutation(_registerUser, {
     onSuccess: () => {
       router.push("/auth/login");
+    },
+    onError: (error: any) => {
+      console.log(error);
+      setError(error.response.data.message);
     },
   });
 
@@ -123,7 +129,11 @@ const RegisterPage = () => {
                 <ErrorMessage name="secondPassword" component="div" />
               </div>
             </div>
-
+            {error && (
+              <div className="text-red-500 bg-red-100 border-2 border-red-500 p-2 text-center rounded-md">
+                <p>{error}</p>
+              </div>
+            )}
             <button
               type="submit"
               className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800 w-full"
