@@ -85,7 +85,7 @@ const LoginPage = () => {
               Zaloguj się
             </button>
             <p>
-              Nie masz konta? <Link href="register">Zarejestruj się</Link>
+              Nie masz konta? <Link href="/auth/register">Zarejestruj się</Link>
             </p>
           </Form>
         </Formik>

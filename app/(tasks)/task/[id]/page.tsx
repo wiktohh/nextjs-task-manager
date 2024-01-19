@@ -160,17 +160,17 @@ const TaskDetails = () => {
   return (
     <Wrapper>
       <div className="w-100 mx-auto p-4 bg-white rounded shadow-md">
-        <div className="flex items-center justify-between mb-4">
+        <div className="md:flex items-center justify-between mb-4">
           <h2 className="text-2xl font-bold">Task Details</h2>
           <div className={` space-x-4`}>
             <button
-              className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none"
+              className="bg-red-500 text-white py-1 px-2 md:py-2 md:px-4 rounded hover:bg-red-600 focus:outline-none"
               onClick={handleDeleteButtonClick}
             >
               Usuń
             </button>
             <button
-              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none"
+              className="bg-blue-500 text-white py-1 px-2 md:py-2 md:px-4 rounded hover:bg-blue-600 focus:outline-none"
               onClick={handleEditButtonClick}
             >
               {isEdit ? "Zapisz" : "Edytuj"}

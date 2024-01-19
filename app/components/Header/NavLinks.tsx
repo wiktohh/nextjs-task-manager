@@ -8,7 +8,7 @@ interface HeaderLinks {
   href: string;
 }
 
-const NavLinks = () => {
+const NavLinks = ({ onMenuClick }: { onMenuClick?: () => void }) => {
   const { token } = useAuth();
   const [authLinks, setAuthLinks] = useState<HeaderLinks[]>([]);
 
@@ -21,9 +21,10 @@ const NavLinks = () => {
   }, [token]);
 
   return (
-    <nav className="space-x-6">
+    <nav className="flex flex-col md:flex-row text-center text-2xl space-y-3 md:space-y-0 md:text-base md:space-x-6">
       {authLinks.map((link) => (
         <Link
+          onClick={onMenuClick}
           key={link.name}
           href={link.href}
           className="text-gray-800 hover:text-red-500 text-md font-bold"

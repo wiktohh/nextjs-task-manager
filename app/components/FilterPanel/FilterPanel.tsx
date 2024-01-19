@@ -23,7 +23,7 @@ const FilterPanel = ({
 
   return (
     <div className="w-100 bg-gray-300 rounded-md p-8 flex flex-col space-y-4 items-center">
-      <div className="w-100 flex space-x-8">
+      <div className="w-100 flex flex-col md:flex-row md:space-x-8">
         <Select
           label="Wybierz status"
           defaultValue="Wszystkie"
@@ -53,7 +53,7 @@ const FilterPanel = ({
       </div>
       <button
         onClick={handleClickSearchButton}
-        className="w-1/4 px-4 py-2 bg-red-500 hover:bg-red-600 rounded-md"
+        className="md:w-1/4 px-4 py-2 bg-red-500 hover:bg-red-600 rounded-md"
       >
         Szukaj
       </button>
